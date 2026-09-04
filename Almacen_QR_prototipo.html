@@ -3,132 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Almacén · Consulta por estantería</title>
+<title>Buscador Almacén</title>
 <style>
 :root{--bg:#f4f6f8;--card:#fff;--ink:#18212b;--muted:#6c7680;--line:#dde3e8;--accent:#176b45;--accent2:#eaf5ef}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink)}
-.app{max-width:620px;margin:auto;min-height:100vh}
-header{background:var(--accent);color:#fff;padding:18px 16px 15px;position:sticky;top:0;z-index:4;box-shadow:0 2px 10px #0002}
-.small{font-size:12px;opacity:.86;text-transform:uppercase;letter-spacing:.08em}h1{font-size:22px;margin:4px 0}#subtitle{font-size:13px;opacity:.9}
-.controls{padding:12px;position:sticky;top:84px;background:var(--bg);z-index:3}
-select,input{width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px 14px;font-size:16px;outline:none}
-select+select,input{margin-top:8px}select:focus,input:focus{border-color:var(--accent)}
-.meta{padding:0 14px 6px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px}
-.list{padding:0 11px 28px}
-.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 13px;margin:8px 0;box-shadow:0 1px 4px #0001}
-.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.ref{font-weight:800;font-size:15px;word-break:break-word}.loc{font-weight:800;background:var(--accent2);color:var(--accent);padding:5px 8px;border-radius:999px;font-size:12px;white-space:nowrap}
-.desc{font-size:14px;line-height:1.32;margin-top:5px}.foot{font-size:12px;color:var(--muted);margin-top:7px}
-.empty{text-align:center;color:var(--muted);padding:38px 18px}
-.note{padding:0 14px 20px;color:var(--muted);font-size:11px;text-align:center}
-.choice{padding:18px 14px 28px;display:grid;gap:14px}.choice button{border:0;border-radius:16px;padding:22px 18px;background:var(--card);color:var(--ink);box-shadow:0 2px 8px #0002;text-align:left;font:inherit;font-weight:800;font-size:18px;cursor:pointer}.choice button span{display:block;margin-top:6px;color:var(--muted);font-weight:400;font-size:14px;line-height:1.35}.choice button.primary{background:var(--accent);color:#fff}.choice button.primary span{color:#eaf5ef}.back{margin:0 14px 10px;border:0;background:transparent;color:var(--accent);font:inherit;font-weight:700;cursor:pointer}.screen[hidden]{display:none}
-.loading{text-align:center;color:var(--muted);padding:42px 18px}
+.app{max-width:680px;margin:auto;min-height:100vh}header{background:var(--accent);color:#fff;padding:17px 15px;position:sticky;top:0;z-index:4;box-shadow:0 2px 10px #0002}h1{font-size:22px;margin:0 0 4px}.sub{font-size:13px;opacity:.9}
+.controls{padding:12px;position:sticky;top:72px;background:var(--bg);z-index:3}select,input{width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px 14px;font-size:16px;outline:none;margin-bottom:8px}select:focus,input:focus{border-color:var(--accent)}
+.meta{padding:0 14px 7px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:8px}.list{padding:0 11px 28px}.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 13px;margin:8px 0;box-shadow:0 1px 4px #0001}.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.ref{font-weight:800;font-size:15px;word-break:break-word}.loc{font-weight:800;background:var(--accent2);color:var(--accent);padding:5px 8px;border-radius:999px;font-size:12px;white-space:nowrap}.desc{font-size:14px;line-height:1.32;margin-top:5px}.foot{font-size:12px;color:var(--muted);margin-top:7px}.empty{text-align:center;color:var(--muted);padding:38px 18px}.loading{text-align:center;color:var(--muted);padding:42px 18px}
 </style>
 </head>
 <body><div class="app">
-<header>
-<div class="small">Consulta móvil de almacén</div>
-<h1 id="title">Almacén</h1>
-<div id="subtitle">Datos del buscador maestro</div>
-</header>
+<header><h1>🔎 Buscador del almacén</h1><div class="sub">Artículo · referencia · descripción · ubicación</div></header>
 <div id="loading" class="loading">Cargando artículos…</div>
-<div id="home" class="screen" hidden>
-<div class="choice">
-<button id="searchChoice" class="primary" type="button">Buscar artículo<span>Busca en todo el almacén. Pasillo y estantería son filtros opcionales.</span></button>
-<button id="fullChoice" type="button">Ver estantería completa<span id="fullChoiceText">Muestra todos los artículos de esta estantería.</span></button>
-</div>
-</div>
-<div id="searchScreen" class="screen" hidden>
-<button class="back" type="button" data-back>← Volver a opciones</button>
+<div id="app" hidden>
 <div class="controls">
-<select id="aisle" aria-label="Pasillo"><option value="">Todos los pasillos</option></select>
-<select id="shelf" aria-label="Estantería" disabled><option value="">Todas las estanterías</option></select>
-<input id="q" type="search" placeholder="Buscar artículo, referencia, descripción o ubicación…" autocomplete="off">
+<select id="maker"><option value="">Todos los fabricantes</option></select>
+<select id="aisle"><option value="">Todos los pasillos</option></select>
+<input id="q" type="search" autocomplete="off" placeholder="Buscar artículo, referencia, descripción o ubicación…">
 </div>
-<div class="meta"><span id="count"></span><span id="maker"></span></div>
-<div id="list" class="list"></div>
-<div id="empty" class="empty" hidden>No hay resultados.</div>
-</div>
-<div id="fullScreen" class="screen" hidden>
-<button class="back" type="button" data-back>← Volver a opciones</button>
-<div class="meta"><span id="fullCount"></span><span id="fullMaker"></span></div>
-<div id="fullList" class="list"></div>
-<div id="fullEmpty" class="empty" hidden>No hay artículos en esta estantería.</div>
-</div>
-<div class="note">Buscador de almacén QR</div>
-</div>
+<div class="meta"><span id="count"></span><span id="total"></span></div>
+<div id="list" class="list"></div><div id="empty" class="empty" hidden>No hay resultados.</div>
+</div></div>
 <script>
 const DATA_SOURCE='https://raw.githubusercontent.com/german19840704/QR-almacen/523b61d0b0bf7054be43a4356e2944d83852c530/Almacen_QR_prototipo.html';
 let DATA=[];
-const title=document.getElementById('title'), subtitle=document.getElementById('subtitle');
-const aisleSel=document.getElementById('aisle'), sel=document.getElementById('shelf'), q=document.getElementById('q');
-const count=document.getElementById('count'), maker=document.getElementById('maker'), list=document.getElementById('list'), empty=document.getElementById('empty');
-const fullCount=document.getElementById('fullCount'), fullMaker=document.getElementById('fullMaker'), fullList=document.getElementById('fullList'), fullEmpty=document.getElementById('fullEmpty');
-let shelves=[], initial='', screen='home';
-function norm(s){return (s||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}
-function locationParts(s){const m=(s||'').match(/^([^E]+)E(.+)$/);return m?{aisle:m[1],shelf:m[2]}:{aisle:'',shelf:''}}
-function aisleOf(s){return locationParts(s).aisle}
-function shelfOf(s){return locationParts(s).shelf}
-function locationLabel(s){const p=locationParts(s);return p.shelf?'Pasillo '+p.aisle+' · Estantería '+p.shelf:'Ubicación '+s}
+const q=document.getElementById('q'), maker=document.getElementById('maker'), aisle=document.getElementById('aisle'), list=document.getElementById('list'), count=document.getElementById('count'), total=document.getElementById('total'), empty=document.getElementById('empty');
+function norm(s){return (s||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim()}
 function esc(s){return (s||'').toString().replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function cards(rows){return rows.map(x=>`<div class="item"><div class="top"><div class="ref">${esc(x.r||x.a||'Sin referencia')}</div><div class="loc">${esc(x.u)}</div></div><div class="desc">${esc(x.d)}</div><div class="foot">Artículo: ${esc(x.a)}${x.f?' · '+esc(x.f):''}</div></div>`).join('')}
-function populateShelves(){
- const aisle=aisleSel.value;
- const values=aisle?[...new Set(shelves.filter(s=>aisleOf(s)===aisle).map(shelfOf).filter(Boolean))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})):[];
- sel.replaceChildren();
- const all=document.createElement('option'); all.value=''; all.textContent='Todas las estanterías'; sel.appendChild(all);
- for(const shelf of values){const o=document.createElement('option');o.value=shelf;o.textContent='Estantería '+shelf;sel.appendChild(o)}
- sel.disabled=!aisle; sel.value='';
-}
-function render(){
- const aisle=aisleSel.value, shelf=sel.value, term=norm(q.value.trim());
- const rows=DATA.filter(x=>(!aisle||aisleOf(x.e)===aisle)&&(!shelf||shelfOf(x.e)===shelf)&&(!term||norm([x.a,x.r,x.d,x.u,x.f].join(' ')).includes(term)));
- title.textContent=shelf?'Pasillo '+aisle+' · Estantería '+shelf:(aisle?'Pasillo '+aisle:'Consulta de almacén');
- subtitle.textContent=(!aisle&&!shelf)?'Búsqueda en todo el almacén':'Filtros opcionales de ubicación';
- const makers=[...new Set(rows.map(x=>x.f).filter(Boolean))];
- maker.textContent=makers.length===1?makers[0]:makers.length+' fabricantes';
- count.textContent=rows.length+(rows.length===1?' resultado':' resultados');
- list.innerHTML=cards(rows); empty.hidden=rows.length>0;
-}
-function renderFull(){
- const rows=DATA.filter(x=>x.e===initial), makers=[...new Set(rows.map(x=>x.f).filter(Boolean))];
- title.textContent=locationLabel(initial); subtitle.textContent='Todos los artículos de esta estantería';
- fullCount.textContent=rows.length+(rows.length===1?' artículo':' artículos');
- fullMaker.textContent=makers.length===1?makers[0]:makers.length+' fabricantes';
- fullList.innerHTML=cards(rows); fullEmpty.hidden=rows.length>0;
-}
-function show(which){
- screen=which;
- document.getElementById('home').hidden=which!=='home';
- document.getElementById('searchScreen').hidden=which!=='search';
- document.getElementById('fullScreen').hidden=which!=='full';
- if(which==='home'){title.textContent='Almacén';subtitle.textContent='Elige una opción'}
- if(which==='search')render();
- if(which==='full')renderFull();
-}
-async function init(){
- try{
-  const raw=await fetch(DATA_SOURCE,{cache:'force-cache'}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.text()});
-  const m=raw.match(/const DATA=(\[[\s\S]*\]);\r?\nconst shelves=/);
-  if(!m)throw new Error('No se pudieron localizar los datos');
-  DATA=JSON.parse(m[1]);
-  shelves=[...new Set(DATA.map(x=>x.e).filter(Boolean))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
-  const aisles=[...new Set(shelves.map(aisleOf).filter(Boolean))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
-  for(const aisle of aisles){const o=document.createElement('option');o.value=aisle;o.textContent='Pasillo '+aisle;aisleSel.appendChild(o)}
-  const params=new URLSearchParams(location.search), requested=params.get('est')||'B1E1';
-  initial=shelves.includes(requested)?requested:(shelves.find(s=>aisleOf(s)===requested)||shelves[0]||'');
-  aisleSel.value=''; populateShelves(); q.value='';
-  document.getElementById('fullChoiceText').textContent='Muestra todos los artículos de '+locationLabel(initial)+'.';
-  document.getElementById('loading').hidden=true; document.getElementById('home').hidden=false; show('home');
- }catch(err){
-  document.getElementById('loading').innerHTML='No se pudieron cargar los artículos.<br><small>'+esc(err.message)+'</small>';
- }
-}
-document.getElementById('searchChoice').addEventListener('click',()=>show('search'));
-document.getElementById('fullChoice').addEventListener('click',()=>show('full'));
-document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>show('home')));
-aisleSel.addEventListener('change',()=>{populateShelves();render()});
-sel.addEventListener('change',render);
-q.addEventListener('input',render);
-init();
+function aisleOf(u){const m=(u||'').match(/^([^E]+)E/);return m?m[1]:''}
+function cards(rows){return rows.slice(0,300).map(x=>`<div class="item"><div class="top"><div class="ref">${esc(x.r||x.a||'Sin referencia')}</div><div class="loc">${esc(x.u||'SIN UBICACIÓN')}</div></div><div class="desc">${esc(x.d||'')}</div><div class="foot">Artículo: ${esc(x.a||'')} · ${esc(x.f||'')}</div></div>`).join('')+(rows.length>300?'<div class="empty">Mostrando los primeros 300 resultados. Afina la búsqueda.</div>':'')}
+function render(){const terms=norm(q.value).split(/\s+/).filter(Boolean), mf=maker.value, ai=aisle.value;const rows=DATA.filter(x=>{if(mf&&x.f!==mf)return false;if(ai&&aisleOf(x.u)!==ai)return false;if(!terms.length)return true;const hay=norm([x.a,x.r,x.d,x.u,x.f].join(' '));return terms.every(t=>hay.includes(t))});count.textContent=rows.length+(rows.length===1?' resultado':' resultados');list.innerHTML=cards(rows);empty.hidden=rows.length>0}
+async function init(){try{const raw=await fetch(DATA_SOURCE,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.text()});const m=raw.match(/const DATA=(\[[\s\S]*?\]);/);if(!m)throw new Error('No se localizaron los datos');DATA=JSON.parse(m[1]);const makers=[...new Set(DATA.map(x=>x.f).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));for(const v of makers){const o=document.createElement('option');o.value=v;o.textContent=v;maker.appendChild(o)}const aisles=[...new Set(DATA.map(x=>aisleOf(x.u)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));for(const v of aisles){const o=document.createElement('option');o.value=v;o.textContent='Pasillo '+v;aisle.appendChild(o)}total.textContent=DATA.length.toLocaleString('es-ES')+' artículos';document.getElementById('loading').hidden=true;document.getElementById('app').hidden=false;render()}catch(e){document.getElementById('loading').innerHTML='Error cargando artículos.<br><small>'+esc(e.message)+'</small>'}}
+q.addEventListener('input',render);maker.addEventListener('change',render);aisle.addEventListener('change',render);init();
 </script></body></html>
