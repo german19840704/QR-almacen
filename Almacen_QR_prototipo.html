@@ -31,7 +31,7 @@ let DATA=[];
 const q=document.getElementById('q'),maker=document.getElementById('maker'),aisle=document.getElementById('aisle'),shelf=document.getElementById('shelf'),list=document.getElementById('list'),count=document.getElementById('count'),total=document.getElementById('total'),empty=document.getElementById('empty');
 function norm(s){return(s||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim()}
 function esc(s){return(s||'').toString().replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function locParts(u){const s=(u||'').toString().trim();let m=s.match(/^PE([1-5])E([^R-]+)/i);if(m)return{aisle:'PE'+m[1],shelf:m[2]};m=s.match(/^N2B([89])E([^R-]+)/i);if(m)return{aisle:'(N2)'+m[1],shelf:m[2]};m=s.match(/^(.+?)E([^R-]+)/i);return m?{aisle:m[1],shelf:m[2]}:{aisle:'',shelf:''}}
+function locParts(u){const s=(u||'').toString().trim();let m=s.match(/^PE([1-5])E([^R-]+)/i);if(m)return{aisle:'PE'+m[1],shelf:m[2]};m=s.match(/^N2B([89])E([^R-]+)/i);if(m)return{aisle:'(N2)'+m[1],shelf:m[2]};m=s.match(/^N20E([^R-]+)/i);if(m)return{aisle:'B20',shelf:m[1]};m=s.match(/^(.+?)E([^R-]+)/i);return m?{aisle:m[1],shelf:m[2]}:{aisle:'',shelf:''}}
 function aisleOf(u){return locParts(u).aisle}
 function shelfOf(u){return locParts(u).shelf}
 function cards(rows){return rows.slice(0,300).map(x=>`<div class="item"><div class="top"><div class="ref">${esc(x.r||x.a||'Sin referencia')}</div><div class="loc">${esc(x.u||'SIN UBICACIÓN')}</div></div><div class="desc">${esc(x.d||'')}</div><div class="foot">Artículo: ${esc(x.a||'')} · ${esc(x.f||'')}</div></div>`).join('')+(rows.length>300?'<div class="empty">Mostrando los primeros 300 resultados. Afina la búsqueda.</div>':'')}
