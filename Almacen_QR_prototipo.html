@@ -32,7 +32,7 @@ const q=document.getElementById('q'),maker=document.getElementById('maker'),aisl
 function norm(s){return(s||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim()}
 function esc(s){return(s||'').toString().replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function displayLoc(u){let s=(u||'').toString().trim();s=s.replace(/^N2B([789])(?=E|R|-|$)/i,'(N2)$1');s=s.replace(/^N20(?=E|R|-|$)/i,'B20');return s}
-function locParts(u){const s=displayLoc(u);let m=s.match(/^PE([1-5])E([^R-]+)/i);if(m)return{aisle:'PE'+m[1],shelf:m[2]};m=s.match(/^NAVE2E([^R-]+)/i);if(m)return{aisle:'NAVE 2',shelf:'PLANTA 2'};m=s.match(/^NAV(?:E([^R-]+))?/i);if(m)return{aisle:'NAVE2',shelf:'PLANTA BAJA'};m=s.match(/^(.+?)E([^R-]+)/i);return m?{aisle:m[1],shelf:m[2]}:{aisle:'',shelf:''}}
+function locParts(u){const s=displayLoc(u);let m=s.match(/^PE([1-5])E([^R-]+)/i);if(m)return{aisle:'PE'+m[1],shelf:m[2]};m=s.match(/^NAVE2E([^R-]+)/i);if(m)return{aisle:'NAVE2',shelf:'PLANTA 2'};m=s.match(/^NAVE2(?=R|-|$)/i);if(m)return{aisle:'NAVE2',shelf:'PLANTA 2'};m=s.match(/^NAVE([^R-]+)?/i);if(m)return{aisle:'NAVE2',shelf:'PLANTA BAJA'};m=s.match(/^NAV(?:E([^R-]+))?/i);if(m)return{aisle:'NAVE2',shelf:'PLANTA BAJA'};m=s.match(/^(.+?)E([^R-]+)/i);return m?{aisle:m[1],shelf:m[2]}:{aisle:'',shelf:''}}
 function aisleOf(u){return locParts(u).aisle}
 function shelfOf(u){return locParts(u).shelf}
 function shelfLabel(ai,v){if(ai==='NAVE2'&&v==='PLANTA BAJA')return 'Planta baja';if(ai==='NAVE2'&&v==='PLANTA 2')return 'Planta 2';return 'Estantería '+v}
